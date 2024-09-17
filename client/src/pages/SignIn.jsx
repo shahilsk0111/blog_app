@@ -6,8 +6,8 @@ import { signInStart , signInFailure , signInSuccess } from '../redux/user/userS
 
 export default function SignIn() {
   const [formData, setFormData] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const {loading , error: errorMessage} = useSelector(state => state.user)
+  
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if ( !formData.password || !formData.email) {
-      return setErrorMessage('All fields are required')
+      return dispatch(signInFailure("please fill out all the fields"))
 
     }
     try {
@@ -33,7 +33,7 @@ export default function SignIn() {
         dispatch(signInFailure(data.message))
       
       }
-      setLoading(false)
+      
 
       if (res.ok) {
         dispatch(signInSuccess(data))
