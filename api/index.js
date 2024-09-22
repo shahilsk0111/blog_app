@@ -7,12 +7,13 @@ import postRoutes from "./routes/post.route.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
+const app = express();
 
 app.use(express.json());
 app.use(cookieParser())
 
 
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URL )
     .then(()=>{
          console.log("MongoDB connected successfully");
  
@@ -21,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URL)
          console.log("Error connecting to MongoDB", error.message);
     });
 
-const app = express();
+
 
 
 app.use('/api/user', userRoutes)
